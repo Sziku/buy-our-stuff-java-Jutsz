@@ -1,0 +1,78 @@
+CREATE table IF NOT exists cart(
+cart_id SERIAL PRIMARY KEY,
+currency VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS users(
+user_id SERIAL PRIMARY KEY,
+user_name VARCHAR,
+password VARCHAR,
+cart_id INT,
+CONSTRAINT fk_cart
+      FOREIGN KEY(cart_id)
+	  REFERENCES cart(cart_id)
+);
+
+
+CREATE TABLE IF NOT EXISTS supplier(
+supplier_id SERIAL PRIMARY KEY,
+supplier_name VARCHAR,
+description VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS product_category(
+product_category_id SERIAL PRIMARY KEY,
+product_category_name VARCHAR,
+department VARCHAR,
+description VARCHAR
+);
+
+CREATE table IF NOT EXISTS product(
+product_id SERIAL PRIMARY KEY,
+product_name VARCHAR,
+description VARCHAR,
+default_price INT,
+currency VARCHAR,
+product_category_id INT,
+supplier_id INT,
+CONSTRAINT fk_product_category
+      FOREIGN KEY(product_category_id)
+	  REFERENCES product_category(product_category_id),
+CONSTRAINT fk_supplier
+      FOREIGN KEY(supplier_id)
+	  REFERENCES supplier(supplier_id)
+);
+
+CREATE TABLE IF NOT exists line_item(
+line_item_id SERIAL PRIMARY KEY,
+quantity INT,
+product_id INT,
+cart_id INT,
+CONSTRAINT fk_product
+      FOREIGN KEY(product_id)
+	  REFERENCES product(product_id),
+CONSTRAINT FK_cart
+      FOREIGN KEY(cart_id)
+	  REFERENCES cart(cart_id)
+);
+
+CREATE TABLE IF NOT exists shipping_info(
+shipping_info_id SERIAL PRIMARY KEY,
+name VARCHAR,
+email VARCHAR,
+phone_number VARCHAR,
+billing_address VARCHAR,
+shipping_address VARCHAR
+);
+
+CREATE TABLE IF NOT exists orders(
+order_id SERIAL PRIMARY key,
+cart_id INT,
+shipping_info_id INT,
+CONSTRAINT fk_cart
+      FOREIGN KEY(cart_id)
+	  REFERENCES cart(cart_id),
+CONSTRAINT fk_shipping_info
+      FOREIGN KEY(shipping_info_id)
+	  REFERENCES shipping_info(shipping_info_id)
+);

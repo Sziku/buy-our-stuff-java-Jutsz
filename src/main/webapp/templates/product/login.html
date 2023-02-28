@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="header.html::header">
+    <title id="pageTitle">Buy Our Stuff | Login</title>
+</head>
+
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Buy Our Stuff</h1>
+</div>
+
+<div class="container">
+
+    <div class="card text-center mt-5">
+        <div class="card-header">
+            Login
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="form-field">
+                    <input type="text" pattern=".{3,20}" title="3-20 characters!" name="username"
+                           required placeholder="Username">
+                </div>
+
+                <div class="form-field">
+                    <input type="password" pattern=".{6,15}" title="6-15 characters!" name="password"
+                           required placeholder="Password">
+                </div>
+                <div class="error-message" th:if="${loginError}" th:text="${'Invalid username or password.'}"> Error </div>
+                <div class="form-field">
+                    <input type="submit" class="btn btn-success" value="Login">
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-muted">
+            <a id="link-back-to-main-page" class="back-to-home" href="/"> &lt;&lt; Back to home </a>
+        </div>
+    </div>
+</div>
+<div th:replace="footer.html :: copy"></div>
+</body>
+
+</html>

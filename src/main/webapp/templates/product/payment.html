@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="header.html::header">
+    <title id="pageTitle">Buy Our Stuff | Payment</title>
+</head>
+
+<body>
+<div class="jumbotron text-center">
+    <h1>Buy Our Stuff</h1>
+</div>
+
+<div class="container center">
+    <div class="card text-center mt-5">
+        <div class="card-header">
+            Choose your payment method:
+        </div>
+        <div class="card-body">
+            <div id="paypal-button-container">
+
+            </div>
+            <script>
+                paypal.Buttons().render('#paypal-button-container');
+            </script>
+        </div>
+        <div class="card-footer text-muted">
+            <a id="link-back-to-main-page" class="back-to-home" href="/"> &lt;&lt; Back to home </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

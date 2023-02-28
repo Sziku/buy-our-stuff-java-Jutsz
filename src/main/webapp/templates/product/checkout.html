@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="header.html::header">
+    <title id="pageTitle">Buy Our Stuff | Checkout</title>
+</head>
+
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Buy Our Stuff</h1>
+</div>
+
+<div class="container">
+    <h2>Shipping information</h2>
+    <div th:switch="${cart.size()}">
+        <div id="no-items-in-cart" th:case="'0'">
+            <h6>No items added into the cart. Yet.</h6>
+        </div>
+        <div th:case="*">
+            <form action="/payment" method="post">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" id="name" name="name" placeholder="Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="e-mail">E-mail address</label>
+                    <input class="form-control" type="email" id="e-mail" name="e-mail" placeholder="E-mail address"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="phone-number">Phone number</label>
+                    <input class="form-control" id="phone-number" name="phone-number" type="tel"
+                           pattern="[0-9]{4} [0-9]{3} [0-9]{4}" placeholder="Phone number (XXXX 123 4567)" required>
+                </div>
+                <div class="form-group">
+                    <label for="billing-address">Billing address</label>
+                    <input class="form-control" id="billing-address" name="billing-address"
+                           placeholder="Billing address" required>
+                </div>
+                <div class="form-group">
+                    <label for="shipping-address">Shopping address</label>
+                    <input class="form-control" id="shipping-address" name="shipping-address"
+                           placeholder="Shipping address" required>
+                </div>
+                <div id="button-container">
+                    <input type="hidden" name="cart" th:value="${cart.id}">
+                    <input class="btn btn-success" type="submit" value="Checkout">
+                    <a id="link-back-to-main-page" class="btn btn-success" href="/"> Go back </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+</body>
+
+</html>

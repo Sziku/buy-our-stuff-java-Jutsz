@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="header.html::header">
+    <title id="pageTitle">Buy Our Stuff | Error</title>
+</head>
+
+<body>
+
+<div class="jumbotron text-center error-jumbotron">
+    <h1>Codecool Shop?</h1>
+</div>
+
+<div id="error-container" class="container">
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading" th:text="'Error ' + ${errorCode} + ': ' + ${errorMessage}">
+            Status code: Error message
+        </h4>
+        <p>If this message keeps popping up, please send us an e-mail at <a class="main-page-error" href="#">NOWAYTHISISREAL@CCSHOP.com</a></p>
+        <hr>
+        <p class="mb-0 error-go-back">
+            Sorry for the inconvenience. Let us try to take you back to the
+            <a class="main-page-error" href="/"> main page.</a>
+        </p>
+    </div>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="header.html::header">
+    <title id="pageTitle">Codecool Shop</title>
+</head>
+
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Buy Our Stuff</h1>
+</div>
+
+<div class="container">
+    <div id="shopping-cart-amount" th:switch="${cartSize}">
+        <div th:case="'0'">
+            <img th:if="${session.user}" id="shopping-cart-image-no-link" class="" src="http://placehold.it/40x40/000/fff"
+            th:attr="src='/static/img/cart.png'" alt=""/>
+            <div class="logged-in-name" th:if="${session.user}" th:text="${session.user.name}"></div>
+        </div>
+        <div th:case="*">
+            <div th:text="${cartSize}"> 0</div>
+            <a href="/cart">
+                <img id="shopping-cart-image" class="" src="http://placehold.it/40x40/000/fff"
+                th:attr="src='/static/img/cart.png'" alt=""/>
+            </a>
+            <div class="logged-in-name" th:if="${session.user}" th:text="${session.user.name}"></div>
+        </div>
+    </div>
+    <ul id="nav-tab" class="nav nav-tabs" th:switch="${cartSize}">
+        <li class="nav-item">
+            <a class="nav-link active disabled" href="/">Shop</a>
+        </li>
+        <li class="nav-item" th:case="'0'">
+            <a class="nav-link disabled" href="/cart">Cart</a>
+        </li>
+        <li class="nav-item" th:case="*">
+            <a class="nav-link" href="/cart">Cart</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout" th:if="${session.user}">Logout</a>
+            <a class="nav-link" href="/login" th:unless="${session.user}">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/register" th:unless="${session.user}">Register</a>
+        </li>
+        <li class="nav-item">
+            <form method="post">
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="submit" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button type="submit" class="dropdown-item"
+                                th:each="cat,iterStat : ${categories}" th:text="${cat.name}"
+                                th:name="categoryId" th:value="${cat.id}">Category</button>
+                    </div>
+                </div>
+            </form>
+        </li>
+        <li class="nav-item">
+            <form method="post">
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="submit" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Suppliers
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button type="submit" class="dropdown-item"
+                                th:each="sup,iterStat : ${suppliers}" th:text="${sup.name}"
+                                th:name="supplierId" th:value="${sup.id}">Supplier</button>
+                    </div>
+                </div>
+            </form>
+        </li>
+    </ul>
+    <div class="card">
+        <strong th:text="${filter.name}">Filtered By</strong>
+    </div>
+
+    <div id="products" class="row">
+        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+            <div class="card">
+                <img class="" src="http://placehold.it/400x250/000/fff"
+                     th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
+                <div class="card-header">
+                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                    <p class="card-text" th:text="${prod.description}">Product description...</p>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                    </div>
+                    <div class="card-text">
+                        <form th:action="@{/}" method="post">
+                            <input type="hidden" th:name="product" th:value="${prod.id}">
+                            <input class="btn btn-success" type="submit" th:if="${session.user}" value="Add to cart">
+                            <input class="btn btn-success" type="submit" disabled th:unless="${session.user}" value="Add to cart">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+
+</body>
+</html>
